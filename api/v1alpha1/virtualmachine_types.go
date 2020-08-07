@@ -102,9 +102,39 @@ type VirtualMachineVolume struct {
 	// have a unique name.
 	Name string `json:"name"`
 
+	// Storage Policy Based Management (SPBM) profile ID associated with the StoragePolicyName.
+	// This currently only applies to volumes with VsphereVolumeSource.
+	// Volumes with PersistentVolumeClaimVolumeSource have their storage policy ID specified in the
+	// PersistentVolume spec.
+	// +optional
+	StoragePolicyID   *string `json:"storagePolicyID,omitempty"`
+
+	// Storage Policy Based Management (SPBM) profile name.
+	// This currently only applies to volumes with VsphereVolumeSource.
+	// Volumes with PersistentVolumeClaimVolumeSource have their storage policy name specified in the
+	// PersistentVolume spec.
+	// +optional
+	StoragePolicyName   *string `json:"storagePolicyName,omitempty"`
+
 	// PersistentVolumeClaim represents a reference to a PersistentVolumeClaim in the same namespace. The PersistentVolumeClaim
 	// must match a persistent volume provisioned (either statically or dynamically) by the cluster's CSI provider.
 	PersistentVolumeClaim *corev1.PersistentVolumeClaimVolumeSource `json:"persistentVolumeClaim,omitempty"`
+
+	// VSphereVolume represents a reference to a vSphereVolumeSpec in the same namespace. Only one of PersistentVolumeClaim or
+	// VSphereVolume can be specified. This is enforced via a webhook
+	// +optional
+	VSphereVolume *VsphereVolumeSource `json:"vSphereVolume,omitempty"`
+}
+
+// VsphereVolumeSource describes a volume source that represent static disks that belong to a VirtualMachine.
+type VsphereVolumeSource struct {
+	// A description of the virtual volume's resources and capacity
+	// +optional
+	Capacity        corev1.ResourceList `json:"capacity,omitempty"`
+
+	// Device key of vSphere disk.  Empty deviceKey means it should be created in vSphere.
+	// +optional
+	DeviceKey          *int `json:"deviceKey,omitempty"`
 }
 
 // Probe describes a health check to be performed against a VirtualMachine to determine whether it is
