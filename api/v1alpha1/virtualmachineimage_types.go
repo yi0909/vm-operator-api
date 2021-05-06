@@ -116,11 +116,11 @@ func (vmImage *VirtualMachineImage) SetConditions(conditions Conditions) {
 // +kubebuilder:resource:scope=Cluster,shortName=vmimage
 // +kubebuilder:storageversion
 // +kubebuilder:subresource:status
-// +kubebuilder:printcolumn:name="Version",type="string",JSONPath=".spec.productInfo.version"
-// +kubebuilder:printcolumn:name="OsType",type="string",JSONPath=".spec.osInfo.type"
-// +kubebuilder:printcolumn:name="Format",type="string",JSONPath=".spec.type"
+// +kubebuilder:printcolumn:name="Version",type="string",priority=-1,JSONPath=".spec.productInfo.version"
+// +kubebuilder:printcolumn:name="OsType",type="string",priority=-1,JSONPath=".spec.osInfo.type"
+// +kubebuilder:printcolumn:name="Format",type="string",priority=-1,JSONPath=".spec.type"
 // +kubebuilder:printcolumn:name="ImageSupported",type="boolean",priority=1,JSONPath=".status.imageSupported"
-// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="Age",type="date",priority=-1,JSONPath=".metadata.creationTimestamp"
 
 // VirtualMachineImage is the Schema for the virtualmachineimages API
 // A VirtualMachineImage represents a VirtualMachine image (e.g. VM template) that can be used as the base image
